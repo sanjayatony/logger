@@ -14,7 +14,7 @@ export default function Post({ post }) {
 			</h1>
 			<p className="my-4 text-sm font-light">by {post.user_email}</p>
 			<div className="mt-8">
-				<ReactMarkdown className="prose" children={post.content} />
+				<ReactMarkdown className="prose">{post.content}</ReactMarkdown>
 			</div>
 		</div>
 	);
