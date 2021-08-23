@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
-import { supabase } from "../../api";
+import { supabase } from "@/lib/api";
 
 export default function Post({ post }) {
 	const router = useRouter();

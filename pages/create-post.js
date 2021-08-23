@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import "easymde/dist/easymde.min.css";
-import { supabase } from "../api";
+import { supabase } from "@/lib/api";
 
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
 	ssr: false,
