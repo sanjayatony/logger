@@ -19,32 +19,8 @@ function MyApp({ Component, pageProps }) {
 		setUser(user);
 	}
 	return (
-		<div>
-			<nav className="p-6 border-b border-gray-300">
-				<Link href="/">
-					<span className="mr-6 cursor-pointer">Home</span>
-				</Link>
-				{user && (
-					<>
-						<Link href="/my-posts">
-							<span className="mr-6 cursor-pointer">
-								My Posts
-							</span>
-						</Link>
-						<Link href="/create-post">
-							<span className="mr-6 cursor-pointer">
-								Create Post
-							</span>
-						</Link>
-					</>
-				)}
-				<Link href="/profile">
-					<span className="mr-6 cursor-pointer">Profile</span>
-				</Link>
-			</nav>
-			<div className="px-16 py-8">
-				<Component {...pageProps} />
-			</div>
+		<div className="">
+			<Component {...pageProps} />
 		</div>
 	);
 }
