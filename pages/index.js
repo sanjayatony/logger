@@ -13,15 +13,14 @@ export default function Home() {
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		fetchPosts();
-		const mySubscription = supabase
-			.from("posts")
-			.on("*", () => fetchPosts())
-			.subscribe();
-		return () => supabase.removeSubscription(mySubscription);
 	}, []);
 
 	async function fetchPosts() {
-		const { data, error } = await supabase.from("posts").select();
+		const user = supabase.auth.user();
+		const { data, error } = await supabase
+			.from("posts")
+			.select("*")
+			.filter("user_id", "eq", user.id);
 		setPosts(data);
 		setLoading(false);
 	}
@@ -33,7 +32,6 @@ export default function Home() {
 			return excerpt;
 		}
 	};
-	const formatdate = (date) => {};
 	if (loading) return <p className="text-2xl text-center">Loading ...</p>;
 	if (!posts.length) return <p className="text-2xl text-center">No posts.</p>;
 
@@ -41,7 +39,7 @@ export default function Home() {
 		<>
 			<Layout title="Home">
 				<div className="mb-6 text-right">
-					<Link href="/create-post">
+					<Link href="/write">
 						<a className="px-5 py-2 text-lg text-purple-500 border border-purple-500 rounded-full hover:text-white hover:bg-purple-500">
 							+ Write
 						</a>
