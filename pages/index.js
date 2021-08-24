@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/api";
-import ReactMarkdown from "react-markdown";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+import ReactTimeAgo from "react-time-ago";
 import Layout from "@/components/Layout";
+
+TimeAgo.addLocale(en);
+
 export default function Home() {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -21,8 +26,8 @@ export default function Home() {
 		setLoading(false);
 	}
 	const excerptPost = (content) => {
-		let excerpt = content.substr(1, 120);
-		if (content.length > 120) {
+		let excerpt = content.substr(1, 110);
+		if (content.length > 110) {
 			return excerpt + "...";
 		} else {
 			return excerpt;
@@ -35,7 +40,7 @@ export default function Home() {
 	return (
 		<>
 			<Layout title="Home">
-				<header className="px-2 border-purple-500mb-8">
+				<header className="px-2 mb-8 border-purple-500">
 					<h1 className="pb-4 text-4xl font-bold tracking-wide text-center border-b border-purple-400">
 						Logs
 					</h1>
@@ -43,14 +48,19 @@ export default function Home() {
 				{posts.map((post) => (
 					<Link key={post.id} href={`/post/${post.id}`}>
 						<div className="p-2 mt-4 cursor-pointer hover:bg-blue-50">
-							<div className="flex">
-								<div>
+							<div className="flex items-center">
+								<div className="w-5/6">
 									<h2 className="text-xl">{post.title}</h2>
 									<div className="text-gray-500">
 										{excerptPost(post.content)}
 									</div>
 								</div>
-								<div>{post.inserted_at}</div>
+								<div className="w-1/6 text-right text-gray-500">
+									<ReactTimeAgo
+										date={post.inserted_at}
+										timeStyle="twitter"
+									/>
+								</div>
 							</div>
 						</div>
 					</Link>
