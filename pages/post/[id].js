@@ -1,22 +1,26 @@
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import { supabase } from "@/lib/api";
+import Layout from "@/components/Layout";
 
 export default function Post({ post }) {
 	const router = useRouter();
 	if (router.isFallback) {
-		return <div>Loading...</div>;
+		return <div className="text-center">Loading...</div>;
 	}
 	return (
-		<div>
-			<h1 className="mt-4 text-5xl font-semibold tracking-wide">
-				{post.title}
-			</h1>
-			<p className="my-4 text-sm font-light">by {post.user_email}</p>
-			<div className="mt-8">
-				<ReactMarkdown className="prose">{post.content}</ReactMarkdown>
-			</div>
-		</div>
+		<>
+			<Layout title={post.title} type="single">
+				<h1 className="mb-8 text-5xl font-bold tracking-wide text-center">
+					{post.title}
+				</h1>
+				<div className="max-w-4xl p-12 mx-auto bg-white shadow-md rounded-3xl">
+					<ReactMarkdown className="prose prose-lg">
+						{post.content}
+					</ReactMarkdown>
+				</div>
+			</Layout>
+		</>
 	);
 }
 
