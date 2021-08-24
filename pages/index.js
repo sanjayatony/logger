@@ -20,25 +20,38 @@ export default function Home() {
 		setPosts(data);
 		setLoading(false);
 	}
-	if (loading) return <p className="text-2xl">Loading ...</p>;
-	if (!posts.length) return <p className="text-2xl">No posts.</p>;
+	const excerptPost = (content) => {
+		let excerpt = content.substr(1, 120);
+		if (content.length > 120) {
+			return excerpt + "...";
+		} else {
+			return excerpt;
+		}
+	};
+	const formatdate = (date) => {};
+	if (loading) return <p className="text-2xl text-center">Loading ...</p>;
+	if (!posts.length) return <p className="text-2xl text-center">No posts.</p>;
 
 	return (
 		<>
 			<Layout title="Home">
-				<h1 className="mb-2 text-4xl font-bold tracking-wide text-center">
-					Logs
-				</h1>
+				<header className="px-2 border-purple-500mb-8">
+					<h1 className="pb-4 text-4xl font-bold tracking-wide text-center border-b border-purple-400">
+						Logs
+					</h1>
+				</header>
 				{posts.map((post) => (
 					<Link key={post.id} href={`/post/${post.id}`}>
-						<div className="pb-4 mt-8 border-b border-gray-300 cursor-pointer">
-							<h2 className="text-xl font-semibold">
-								{post.title}
-							</h2>
-							<ReactMarkdown>{post.content}</ReactMarkdown>
-							<p className="mt-2 text-gray-500">
-								Author: {post.user_email}
-							</p>
+						<div className="p-2 mt-4 cursor-pointer hover:bg-blue-50">
+							<div className="flex">
+								<div>
+									<h2 className="text-xl">{post.title}</h2>
+									<div className="text-gray-500">
+										{excerptPost(post.content)}
+									</div>
+								</div>
+								<div>{post.inserted_at}</div>
+							</div>
 						</div>
 					</Link>
 				))}
