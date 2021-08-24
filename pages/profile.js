@@ -1,6 +1,7 @@
 import { Auth, Typography, Button } from "@supabase/ui";
 const { Text } = Typography;
 import { supabase } from "@/lib/api";
+import Layout from "@/components/Layout";
 
 function Profile(props) {
 	const { user } = Auth.useUser();
@@ -21,10 +22,12 @@ function Profile(props) {
 
 export default function AuthProfile() {
 	return (
-		<Auth.UserContextProvider supabaseClient={supabase}>
-			<Profile supabaseClient={supabase}>
-				<Auth supabaseClient={supabase} />
-			</Profile>
-		</Auth.UserContextProvider>
+		<Layout title="Profile" type="single">
+			<Auth.UserContextProvider supabaseClient={supabase}>
+				<Profile supabaseClient={supabase}>
+					<Auth supabaseClient={supabase} />
+				</Profile>
+			</Auth.UserContextProvider>
+		</Layout>
 	);
 }
